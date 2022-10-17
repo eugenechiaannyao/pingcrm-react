@@ -5,6 +5,7 @@ import { useForm } from '@inertiajs/inertia-react';
 import Logo from '@/Shared/Logo';
 import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
+import FlashMessages from "@/Shared/FlashMessages";
 
 export default () => {
   const { data, setData, errors, post, processing } = useForm({
@@ -20,7 +21,7 @@ export default () => {
 
   function handleForgottenPassword(e) {
     e.preventDefault();
-    post(route('forgot.password'));
+    post(route('forgot'));
   }
 
   return (
@@ -38,6 +39,7 @@ export default () => {
           <div className="px-10 py-12">
             <h1 className="text-3xl font-bold text-center">Welcome Back!</h1>
             <div className="w-24 mx-auto mt-6 border-b-2" />
+            <FlashMessages/>
             <TextInput
               className="mt-10"
               label="Email"
