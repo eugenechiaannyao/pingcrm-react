@@ -5,17 +5,23 @@ import { useForm } from '@inertiajs/inertia-react';
 import Logo from '@/Shared/Logo';
 import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
+import FlashMessages from "@/Shared/FlashMessages";
 
 export default () => {
   const { data, setData, errors, post, processing } = useForm({
-    email: 'johndoe@example.com',
-    password: 'secret',
-    remember: true
+    email: '',
+    password: '',
+    remember: false
   });
 
   function handleSubmit(e) {
     e.preventDefault();
     post(route('login.attempt'));
+  }
+
+  function handleForgottenPassword(e) {
+    e.preventDefault();
+    post(route('forgot'));
   }
 
   return (
@@ -33,6 +39,7 @@ export default () => {
           <div className="px-10 py-12">
             <h1 className="text-3xl font-bold text-center">Welcome Back!</h1>
             <div className="w-24 mx-auto mt-6 border-b-2" />
+            <FlashMessages/>
             <TextInput
               className="mt-10"
               label="Email"
@@ -40,6 +47,7 @@ export default () => {
               type="email"
               errors={errors.email}
               value={data.email}
+              placeholder="Your email address"
               onChange={e => setData('email', e.target.value)}
             />
             <TextInput
@@ -49,6 +57,7 @@ export default () => {
               type="password"
               errors={errors.password}
               value={data.password}
+              placeholder="Your password"
               onChange={e => setData('password', e.target.value)}
             />
             <label
@@ -67,9 +76,13 @@ export default () => {
             </label>
           </div>
           <div className="flex items-center justify-between px-10 py-4 bg-gray-100 border-t border-gray-200">
-            <a className="hover:underline" tabIndex="-1" href="#reset-password">
+            <button
+              className="hover:underline"
+              tabIndex="-1" href="#reset-password"
+              onClick={handleForgottenPassword}
+            >
               Forgot password?
-            </a>
+            </button>
             <LoadingButton
               type="submit"
               loading={processing}
