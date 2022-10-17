@@ -5,9 +5,10 @@ import { useForm } from '@inertiajs/inertia-react';
 import Logo from '@/Shared/Logo';
 import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
+import FlashMessages from "@/Shared/FlashMessages";
 
 export default () => {
-  const { data, post, processing, setData } = useForm({
+  const { data, post, processing, setData, get } = useForm({
     email: '',
   });
 
@@ -18,7 +19,7 @@ export default () => {
 
   function handleRememberPassword(e) {
     e.preventDefault();
-    history.back()
+    get(route('login'));
   }
 
   return (
@@ -36,6 +37,7 @@ export default () => {
           <div className="px-10 py-12">
             <h1 className="text-3xl font-bold text-center">Forgot your password?</h1>
             <div className="w-24 mx-auto mt-6 border-b-2" />
+            <FlashMessages/>
             <TextInput
               className="mt-10"
               label="Email"
@@ -49,13 +51,12 @@ export default () => {
           <div className="flex items-center justify-between px-10 py-4 bg-gray-100 border-t border-gray-200">
             <button
               className="hover:underline"
-              tabIndex="-1" href="#reset-password"
+              tabIndex="-1"
               onClick={handleRememberPassword}
             >
               I remember my password.
             </button>
             <LoadingButton
-              type="submit"
               className="btn-indigo"
               loading={processing}
             >
